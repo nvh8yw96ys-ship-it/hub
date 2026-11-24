@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Hub</title>
+<link rel="manifest" href="manifest.webmanifest" />
+<meta name="theme-color" content="#0b2545" />
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* 60 / 30 / 10: white surfaces (60) · navy header, headings and text (30) · ice blue accent (10) */
+:root{
+  --white:#ffffff; --page:#f6f8fb; --line:#e3e8ef; --line2:#d3dae4;
+  --navy:#0b2545; --navy2:#13315c; --text:#0b2545; --text2:#3a4f6e; --mute:#6b7a90; --dim:#a3adbb;
+  --ice:#90caf9; --ice2:#d6ebfd; --ice3:#eef7ff;
+  --ok:#2e7d32; --warn:#b26a00; --bad:#c62828;
+  --r:14px; --ease:cubic-bezier(.22,1,.36,1);
+  --shadow:0 1px 2px rgba(11,37,69,.05),0 2px 8px -2px rgba(11,37,69,.06);
+}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--page);color:var(--text);font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* ---------- header (navy) ---------- */
+header{background:var(--navy);color:#fff;padding:calc(22px + env(safe-area-inset-top)) 16px 64px}
+.wrap{max-width:1240px;margin:0 auto}
+.top{display:flex;align-items:center;gap:12px;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:.2px}
+.brand img{width:28px;height:28px;border-radius:7px}
+.hbtn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;color:rgba(255,255,255,.75);transition:background .2s}
+.hbtn:hover{background:rgba(255,255,255,.1);color:#fff}
+.hello{margin-top:26px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.hello h1{font-size:30px;font-weight:700;letter-spacing:-.5px}
+.hello .date{color:rgba(255,255,255,.7);margin-top:4px;font-size:15px}
+.clock{font-size:30px;font-weight:600;font-variant-numeric:tabular-nums;color:rgba(255,255,255,.92)}
+.launch{display:flex;gap:8px;margin-top:22px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#fff;font-weight:500;font-size:13px;transition:background .2s,border-color .2s}
+.chip:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.28)}
+.chip .i{width:16px;height:16px;color:var(--ice)}
+
+/* ---------- main grid ---------- */
+main{padding:0 16px 40px;margin-top:-40px}
+.grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:18px;align-items:start}
+.col{display:grid;gap:18px;min-width:0}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px;min-width:0;animation:rise .5s var(--ease) both}
+.col .card:nth-child(2){animation-delay:.06s}.col .card:nth-child(3){animation-delay:.12s}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.ch{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.ch h2{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
+.ch h2 .i{color:var(--navy2)}
+.ch .sub{color:var(--mute);font-size:12px}
+.link{display:inline-flex;align-items:center;gap:4px;color:var(--text2);font-size:12.5px;font-weight:500;padding:4px 8px;border-radius:8px}
+.link:hover{background:var(--page)}
+.link .i{width:14px;height:14px}
+
+/* primary button: the accent */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:10px;background:var(--ice);color:var(--navy);font-weight:600;font-size:13px;transition:filter .2s,transform .2s}
+.btn:hover{filter:brightness(.96)}.btn:active{transform:scale(.98)}
+.btn.ghost{background:var(--white);border:1px solid var(--line2);color:var(--text2);font-weight:500}
+
+/* calendar */
+.seg{display:inline-flex;background:var(--page);border:1px solid var(--line);border-radius:10px;padding:3px}
+.seg button{padding:5px 11px;border-radius:7px;font-size:12.5px;font-weight:500;color:var(--mute)}
+.seg button.on{background:var(--white);color:var(--navy);box-shadow:0 1px 2px rgba(11,37,69,.12)}
+.calbox{position:relative;border:1px solid var(--line);border-radius:10px;overflow:hidden;height:640px;background:var(--white)}
+.calbox iframe{width:100%;height:100%;border:0;display:block}
+.calnote{margin-top:10px;color:var(--mute);font-size:12px;display:flex;gap:8px;align-items:flex-start}
+.calnote .i{width:15px;height:15px;margin-top:1px}
+
+/* fuel */
+.metric{margin-bottom:12px}
+.metric .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.metric .lbl{font-weight:500;color:var(--text2)}
+.metric .val{font-variant-numeric:tabular-nums;font-weight:600}
+.metric .val span{color:var(--mute);font-weight:400}
+.bar{height:8px;border-radius:99px;background:var(--page);border:1px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:99px;background:var(--ice);transition:width .9s var(--ease)}
+.bar.navy i{background:var(--navy2)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px}
+.stat{background:var(--page);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-width:0}
+.stat .k{font-size:11.5px;color:var(--mute);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.stat .v{font-size:17px;font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat .v small{font-size:12px;color:var(--mute);font-weight:400}
+.next{display:flex;align-items:center;gap:10px;margin-top:12px;padding:10px 12px;border-radius:10px;background:var(--ice3);border:1px solid var(--ice2)}
+.next .i{color:var(--navy2)}
+.next b{font-weight:600}
+
+/* grades */
+.gpa{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+.gpa .n{font-size:34px;font-weight:700;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
+.gpa .s{color:var(--mute)}
+.course{display:grid;grid-template-columns:76px minmax(0,1fr) 50px 30px;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
+.course .code{font-weight:600;font-size:13px}
+.course .pct{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.course .pct.none{color:var(--dim);font-weight:400}
+.lt{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;font-weight:700;font-size:13px;background:var(--page);color:var(--dim);border:1px solid var(--line)}
+.lt.A{background:var(--navy);color:#fff;border-color:var(--navy)}
+.lt.B{background:var(--ice2);color:var(--navy);border-color:var(--ice2)}
+.lt.C,.lt.D,.lt.F{background:#fdecea;color:var(--bad);border-color:#f8d4d0}
+
+/* reminders */
+.empty{color:var(--mute);font-size:13px;line-height:1.55}
+.empty p{margin-bottom:12px}
+.stamp{color:var(--dim);font-size:11.5px;margin-top:12px}
+
+/* settings modal */
+.modal{position:fixed;inset:0;background:rgba(11,37,69,.4);display:none;align-items:center;justify-content:center;padding:16px;z-index:20}
+.modal.on{display:flex}
+.sheet{background:var(--white);border-radius:var(--r);padding:20px;width:min(480px,100%);box-shadow:0 20px 50px -12px rgba(11,37,69,.4);animation:rise .3s var(--ease)}
+.sheet h3{font-size:16px;margin-bottom:4px}
+.sheet .hint{color:var(--mute);font-size:12.5px;margin-bottom:14px}
+.sheet label{display:block;font-weight:500;margin:12px 0 6px;font-size:13px}
+.sheet textarea{width:100%;min-height:80px;padding:10px;border:1px solid var(--line2);border-radius:10px;font:inherit;font-size:12.5px;resize:vertical;color:var(--text)}
+.sheet textarea:focus{outline:2px solid var(--ice);border-color:var(--ice)}
+.sheet .acts{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+
+@media (max-width:960px){.grid{grid-template-columns:1fr}.calbox{height:520px}}
+@media (max-width:520px){
+  header{padding-bottom:56px}
+  .hello h1{font-size:24px}.clock{font-size:22px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .course{grid-template-columns:70px minmax(0,1fr) 46px 28px;gap:8px}
+  .calbox{height:460px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand"><img src="icons/icon-192.png" alt="" />Hub</div>
+      <button class="hbtn" id="openSettings" title="Settings" aria-label="Settings"><svg class="i" viewBox="0 0 24 24"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg></button>
+    </div>
+    <div class="hello">
+      <div><h1 id="greet">Hello</h1><div class="date" id="date"></div></div>
+      <div class="clock" id="clock"></div>
+    </div>
+    <nav class="launch" id="launch"></nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap grid">
+    <section class="card" id="calCard">
+      <div class="ch">
+        <h2><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Calendar</h2>
+        <div class="seg" id="calView"><button data-m="AGENDA">Agenda</button><button data-m="WEEK">Week</button><button data-m="MONTH">Month</button></div>
+      </div>
+      <div class="calbox"><iframe id="calFrame" title="Google Calendar" loading="lazy"></iframe></div>
+      <div class="calnote"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span>Live from Google Calendar. If it asks you to sign in or shows nothing, sign in to Google in this browser, or use <a class="link" style="padding:0" href="https://calendar.google.com/" target="_blank" rel="noopener">Google Calendar</a>.</span></div>
+    </section>
+
+    <div class="col">
+      <section class="card">
+        <div class="ch"><h2><svg class="i" viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12z"/></svg>Fuel today</h2><a class="link" href="../fuel/">Open <svg class="i" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></a></div>
+        <div id="fuel"></div>
+      </section>
+      <section class="card">
+        <div class="ch"><h2><svg class="i" viewBox="0 0 24 24"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5z"/><path d="M5 19.5A1.5 1.5 0 0 0 6.5 21H19v-3"/><path d="M9 7.5h6M9 11h4"/></svg>Grades</h2><a class="link" href="../grades/">Open <svg class="i" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></a></div>
+        <div id="grades"></div>
+      </section>
+      <section class="card">
+        <div class="ch"><h2><svg class="i" viewBox="0 0 24 24"><path d="M5 12.5 9.5 17 19 7.5"/></svg>Reminders</h2></div>
+        <div class="empty"><p>Your Google Tasks list will show here, with check-off, once it's connected (next step).</p><a class="btn" href="https://tasks.google.com/" target="_blank" rel="noopener">Open Google Tasks</a></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<div class="modal" id="modal">
+  <div class="sheet" role="dialog" aria-labelledby="setTitle">
+    <h3 id="setTitle">Hub settings</h3>
+    <div class="hint">Saved only on this device.</div>
+    <label for="extraCals">Extra calendars to show (one calendar ID per line)</label>
+    <textarea id="extraCals" placeholder="e.g. your Google account email for your main calendar"></textarea>
+    <div class="acts"><button class="btn ghost" data-close>Cancel</button><button class="btn" id="saveSettings">Save</button></div>
+  </div>
+</div>
+
+<!-- hidden copies of Fuel and Grade Ledger: loading them refreshes the summaries they share with the hub -->
+<iframe id="syncFuel" title="" aria-hidden="true" tabindex="-1" style="display:none"></iframe>
+<iframe id="syncGrades" title="" aria-hidden="true" tabindex="-1" style="display:none"></iframe>
+
+<script src="app.js"></script>
+<script>if ("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("sw.js").catch(() => {});</script>
+</body>
+</html>
